@@ -1,0 +1,28 @@
+import MusicDisplay from "../../components/MusicDisplay";
+import Tracklist from "../../pages/tracklist";
+import {MongoClient} from "mongodb";
+
+export default async function Page() {
+    const tracks = await getTracks()
+
+    return (
+        <>
+            <Tracklist tracks={tracks}/>
+        </>
+    )
+}
+export async function getTracks(){
+    try{
+        const client = new MongoClient(process.env.MONGODB_URI);
+        const db = client.db('musicdata');
+        const tracks  = await db
+            .collection("tracks")
+            .find({})
+            .toArray()
+        // console.log(tracks)
+        return JSON.parse(JSON.stringify(tracks))
+
+    }catch(err){
+        console.error(err)
+    }
+}
