@@ -8,4 +8,5 @@ module.exports = withPlugins([withTM], {
     webpack(config, options) {
         return config;
     },
+    output:"standalone"
 });

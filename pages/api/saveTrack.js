@@ -21,8 +21,8 @@ export default async function handler (req, res) {
         const client = new MongoClient(process.env.MONGODB_URI);
 
         try {
-            let randomName = "audiofiles/"+crypto.randomUUID()
-            fs.writeFile(randomName,data.audio,(err)=>{
+            let randomName = crypto.randomUUID()
+            fs.writeFile(process.env.FILESTORAGE+randomName,data.audio,(err)=>{
                 if(err) throw new Error("Something went wrong")
                 console.log("File saved")
             })

@@ -8,7 +8,6 @@ import * as Path from "path";
 export default async function (req, res) {
     if (req.method === 'GET') {
         // const { data } = req.body;
-        console.log(req.query)
         const client = new MongoClient(process.env.MONGODB_URI);
         try {
             const db = client.db('musicdata');
