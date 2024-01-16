@@ -137,7 +137,7 @@ export default function TrackUpload(props){
             },
             body:JSON.stringify(track)
         }).then(res=>{
-            console.log(res)
+            console.log(res.data)
         }).catch(err=>{
             console.log(err)
         })

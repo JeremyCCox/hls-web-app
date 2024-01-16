@@ -31,3 +31,4 @@ yarn-error.log*
 .idea/misc.xml
 .idea/jsLibraryMappings.xml
 yarn.lock
+/audiofiles/
