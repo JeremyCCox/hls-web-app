@@ -19,17 +19,12 @@ export default async function handler (req, res) {
         const data = req.body;
 
         const client = new MongoClient(process.env.MONGODB_URI);
-        fs.readdir("./audiofiles/",(err,data)=>{
-            console.log(data)
-        })
+
         try {
             let randomName = crypto.randomUUID()
-            fs.writeFile("app/"+process.env.FILESTORAGE+randomName,data.audio,(err)=>{
+            fs.writeFile(process.env.FILESTORAGE+randomName,data.audio,(err)=>{
                 if(err) throw new Error("Something went wrong")
                 console.log("File saved")
-                fs.readdir(".",(err,data)=>{
-                    console.log(data)
-                })
             })
 
             data.audio = randomName
@@ -39,7 +34,7 @@ export default async function handler (req, res) {
 
             res.status(201).json({ message: 'Data saved successfully!'});
         } catch (error) {
-            console.error(error)
+            console.error("Savetrack Error",error)
             res.status(500).json({ message: 'Something went wrong!' });
         } finally {
             console.log("closing")
