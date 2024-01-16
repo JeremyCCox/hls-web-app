@@ -8,6 +8,16 @@ import Navigator from "./Navigator";
 const ListBody = styled.div`
   display: grid;
   justify-content: center;
+  overflow-y: scroll;
+  
+  
+  // Get rid of scrollbar on most platforms
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  
 `
 const ListItem = styled.label`
   z-index: 1;
