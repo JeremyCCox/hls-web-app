@@ -12,7 +12,12 @@ export default async function (req, res) {
             //     .find({})
             //     .toArray()
             // let track = trackData[0]
-            console.log(process.env.FILESTORAGE)
+            console.log("Data: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            console.log(process.cwd())
+            await fs.readdir("",(err,data)=>{
+                console.log(data)
+            })
+
             let filePath = process.env.FILESTORAGE+req.query.filename
             // let filePath = "12b5f1fa-722f-4ce8-8b7f-531017ce9494"
             fs.stat(filePath,(err,stats)=>{
