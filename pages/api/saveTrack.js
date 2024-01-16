@@ -22,7 +22,7 @@ export default async function handler (req, res) {
 
         try {
             let randomName = crypto.randomUUID()
-            fs.writeFile(process.env.FILESTORAGE+randomName,data.audio,(err)=>{
+            fs.writeFile("app/"+process.env.FILESTORAGE+randomName,data.audio,(err)=>{
                 if(err) throw new Error("Something went wrong")
                 console.log("File saved")
             })
