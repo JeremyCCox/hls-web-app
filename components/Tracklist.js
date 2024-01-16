@@ -81,14 +81,6 @@ export default function Tracklist(){
         <>
             <Navigator/>
             <ListBody>
-                <Filler/>
-                <Filler/>
-                <Filler/>
-                <Filler/>
-                <Filler/>
-                <Filler/>
-                <Filler/>
-
             {Object.values(tracks).map(track=>{
                 return(
                     <ListItem id={track._id} key={track._id} onClick={()=>{router.push("listen/"+track._id)}} htmlFor={"navLink"+track._id}>
