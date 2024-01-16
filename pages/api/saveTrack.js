@@ -19,13 +19,19 @@ export default async function handler (req, res) {
         const data = req.body;
 
         const client = new MongoClient(process.env.MONGODB_URI);
-
+        fs.readdir("./audiofiles/",(err,data)=>{
+            console.log(data)
+        })
         try {
             let randomName = crypto.randomUUID()
             fs.writeFile("app/"+process.env.FILESTORAGE+randomName,data.audio,(err)=>{
                 if(err) throw new Error("Something went wrong")
                 console.log("File saved")
+                fs.readdir(".",(err,data)=>{
+                    console.log(data)
+                })
             })
+
             data.audio = randomName
             await client.connect()
             const db = client.db('musicdata');
