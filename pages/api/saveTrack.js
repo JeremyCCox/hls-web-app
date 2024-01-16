@@ -35,9 +35,9 @@ export default async function handler (req, res) {
             data.audio = randomName
             await client.connect()
             const db = client.db('musicdata');
-            await db.collection('tracks').insertOne({data})
+            let queryResult = await db.collection('tracks').insertOne({data})
 
-            res.status(201).json({ message: 'Data saved successfully!'});
+            res.status(201).json({ message: 'Data saved successfully!',data:queryResult});
         } catch (error) {
             console.error("Savetrack Error",error)
             res.status(500).json({ message: 'Something went wrong!' });

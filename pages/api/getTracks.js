@@ -8,9 +8,9 @@ import * as Path from "path";
 export default async function (req, res) {
     if (req.method === 'GET') {
         // const { data } = req.body;
-        console.log(process.cwd())
         const client = new MongoClient(process.env.MONGODB_URI);
         try {
+            await client.connect()
             const db = client.db('musicdata');
             const tracks  = await db
                 .collection("tracks")
@@ -23,6 +23,7 @@ export default async function (req, res) {
             //         res.status(201).json({ message: 'Data fetched successfully!', data:track });
             //     })
             // }
+            console.log(tracks)
             res.status(201).json(tracks)
             // return JSON.parse(JSON.stringify(tracks))
         } catch (error) {
