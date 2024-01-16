@@ -8,5 +8,16 @@ module.exports = withPlugins([withTM], {
     webpack(config, options) {
         return config;
     },
+    headers: () => [
+        {
+            source: '/listen/',
+            headers: [
+                {
+                    key: 'Cache-Control',
+                    value: 'no-store',
+                },
+            ],
+        },
+    ],
     output:"standalone"
 });

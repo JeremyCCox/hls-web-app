@@ -1,6 +1,6 @@
 'use client'
 import styled from "styled-components";
-import {useEffect} from "react";
+import {useEffect, useReducer, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Navigator from "./Navigator";
@@ -27,18 +27,39 @@ const TrackThumb = styled.img`
   background-color: white;
 `
 
-export default function Tracklist(props){
-    const tracks = props.tracks || [];
+const trackReducer = (state,action)=>{
+
+}
+const trackInitializer = ()=>{
+    // let val = await fetch()
+}
+// export default function Tracklist(props){
+//     const tracks = props.tracks || [];
+export default function Tracklist(){
+    // const [track,trackDispatch] = useReducer(trackReducer,{},trackInitializer);
+    const [tracks, setTracks] = useState([])
+    useEffect(()=>{
+      if(tracks.length === 0){
+          fetch("/api/getTracks").then(res=>{
+              if(res.ok){
+                  return res.json()
+              }
+          }).then(data=>{
+              console.log(data)
+              setTracks(data)
+          }).catch(err=>{
+              console.log(err)
+          })
+      }
+    },[])
+
     const router = useRouter()
 
     const openTrack=(e)=>{
         console.log(e.target.id)
 
     }
-    useEffect(()=>{
-        console.log(tracks)
-    })
-    console.log(props)
+    // console.log(props)
     return(
         <>
             <Navigator/>

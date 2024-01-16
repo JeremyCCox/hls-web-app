@@ -11,7 +11,7 @@ export default async function (req, res) {
         const client = new MongoClient(process.env.MONGODB_URI);
         try {
             const db = client.db('musicdata');
-            const trackData  = await db
+            const tracks  = await db
                 .collection("tracks")
                 .find({})
                 .toArray()
@@ -22,6 +22,8 @@ export default async function (req, res) {
             //         res.status(201).json({ message: 'Data fetched successfully!', data:track });
             //     })
             // }
+            res.status(201).json(tracks)
+            // return JSON.parse(JSON.stringify(tracks))
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: 'Something went wrong!' });
