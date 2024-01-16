@@ -17,7 +17,9 @@ export default async function (req, res) {
             fs.readdir(".",(err,data)=>{
                 console.log(data)
             })
-
+            fs.readdir("./audiofiles/",(err,data)=>{
+                console.log(data)
+            })
             let filePath = process.env.FILESTORAGE+req.query.filename
             // let filePath = "12b5f1fa-722f-4ce8-8b7f-531017ce9494"
             fs.stat(filePath,(err,stats)=>{
