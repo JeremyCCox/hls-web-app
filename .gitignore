@@ -29,3 +29,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .idea/misc.xml
+.idea/jsLibraryMappings.xml
+yarn.lock

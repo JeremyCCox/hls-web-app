@@ -8,15 +8,15 @@ import Navigator from "./Navigator";
 const ListBody = styled.div`
   display: grid;
   justify-content: center;
-  overflow-y: scroll;
-  
-  
-  // Get rid of scrollbar on most platforms
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar{
-    display: none;
-  }
+  //overflow-y: scroll;
+  //
+  //
+  //// Get rid of scrollbar on most platforms
+  //-ms-overflow-style: none;  /* IE and Edge */
+  //scrollbar-width: none;  /* Firefox */
+  //&::-webkit-scrollbar{
+  //  display: none;
+  //}
   
 `
 const ListItem = styled.label`
@@ -30,13 +30,18 @@ const ListItem = styled.label`
     border: 2px solid white;
   }
   box-sizing: border-box;
+  height: 500px;
 `
 const TrackThumb = styled.img`
   height: 128px;
   width: 128px;
   background-color: white;
 `
-
+const Filler = styled.div`
+  border: solid 2px green;
+  height: 200px;
+  width: 60px;
+`
 const trackReducer = (state,action)=>{
 
 }
@@ -53,10 +58,12 @@ export default function Tracklist(){
           fetch("/api/getTracks").then(res=>{
               if(res.ok){
                   return res.json()
+              }else{
+                  return(res.statusMessage)
               }
           }).then(data=>{
               console.log(data)
-              setTracks(data)
+              setTracks(data||[])
           }).catch(err=>{
               console.log(err)
           })
@@ -74,8 +81,15 @@ export default function Tracklist(){
         <>
             <Navigator/>
             <ListBody>
+                <Filler/>
+                <Filler/>
+                <Filler/>
+                <Filler/>
+                <Filler/>
+                <Filler/>
+                <Filler/>
+
             {Object.values(tracks).map(track=>{
-                console.log(track)
                 return(
                     <ListItem id={track._id} key={track._id} onClick={()=>{router.push("listen/"+track._id)}} htmlFor={"navLink"+track._id}>
                         <TrackThumb alt={"Track Image"} src={track.data.image}/>
