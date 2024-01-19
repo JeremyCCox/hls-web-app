@@ -53,7 +53,10 @@ const trackInitializer=()=>{
 }
 export default function TrackUpload(props){
     const router = useRouter()
+    const audioContext = new AudioContext();
+
     const [track, trackDispatch] = useReducer(trackReducer,{},trackInitializer)
+
     const [buffer,setBuffer]=useState()
 
     const handleDrop=async (e)=>{
@@ -118,10 +121,20 @@ export default function TrackUpload(props){
             let buff = reader.result;
             let mp3Tag = new MP3Tag(buff)
             mp3Tag.read();
+            console.log(mp3Tag.tags)
             trackDispatch({type: "setTags", tags: mp3Tag.tags})
             trackDispatch({type: "change", tag:"extension",value:"lll"})
             if (mp3Tag.error !== '') throw new Error(mp3Tag.error)
-            setBuffer(buff)
+            setBuffer(mp3Tag.buffer)
+            audioContext.decodeAudioData(buff).then(res=>{
+                console.log(res)
+                trackDispatch({type:"setAttrib",attrib:"trackdata",value:{
+                        duration:res.duration,
+                        length:res.length,
+                        numberOfChannels:res.numberOfChannels,
+                        sampleRate:res.sampleRate
+                    }})
+            })
 
         }
         reader.readAsArrayBuffer(file)
@@ -157,16 +170,17 @@ export default function TrackUpload(props){
         <DisplayBody>
             <MusicUpload>
                 <BackButton onClick={()=>{router.push("listen/")}}> Go Back</BackButton>
-                <UploadButton ready={track.audio !== undefined && track.image !== undefined} onClick={saveAudio}>Upload Music</UploadButton>
+                <UploadButton $uploadable={track.audio !== undefined && track.image !== undefined} onClick={saveAudio}>Upload Music</UploadButton>
             </MusicUpload>
             <MusicBox url={track.image} onDrop={handleDrop} onDragOver={e=>e.preventDefault()}>
 
             </MusicBox>
+            <input type={"button"} onClick={()=>{console.log(track)}}/>
             <audio src={track.audio} controls></audio>
             <MusicInfo>
-                <InfoInput id={"title"} placeholder={"Track Title"} value={track.title} onChange={changeTag}/>
-                <InfoInput id={"artist"} placeholder={"Artist"} value={track.artist} onChange={changeTag}/>
-                <InfoInput id={"album"} placeholder={"Album"} value={track.album} onChange={changeTag}/>
+                <InfoInput id={"title"} placeholder={"Track Title"} value={track.title||""} onChange={changeTag}/>
+                <InfoInput id={"artist"} placeholder={"Artist"} value={track.artist||""} onChange={changeTag}/>
+                <InfoInput id={"album"} placeholder={"Album"} value={track.album||""} onChange={changeTag}/>
             </MusicInfo>
         </DisplayBody>
     )

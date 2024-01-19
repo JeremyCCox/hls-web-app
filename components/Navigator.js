@@ -7,7 +7,7 @@ import {useState} from "react";
 const NavZone = styled.div`
   position: fixed;
   z-index: 1;
-  height: 5%;
+  //height: 5%;
   //bottom: 90%;
   //border: white solid 1px;
   //box-sizing: border-box;
@@ -27,7 +27,7 @@ const NavButton = styled.label`
   border: solid white 1px;
   border-radius: 30px;
   text-align: center;
-  flex-basis: 20%;
+  //flex-basis: 20%;
   align-content: end;
   //align-items: baseline;
 `

@@ -151,6 +151,6 @@ export const UploadButton = styled.button`
   border-radius: 30px;
   font-size: x-large;
   background-color: rgba(0,0,0,0);
-  color: ${props=> props.ready?"white":"gray"};
+  color: ${props=> props.$uploadable?"white":"gray"};
   padding:20px 30px;
 `

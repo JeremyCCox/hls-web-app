@@ -58,6 +58,7 @@ const trackReducer = (state,action) =>{
 }
 
 const trackInitializer=(initialTrack)=>{
+    // console.log(initialTrack)
     return{
         name:initialTrack.data.name,
         title: initialTrack.data.title,
@@ -70,6 +71,7 @@ const trackInitializer=(initialTrack)=>{
         track: initialTrack.data.track,
         trackId:initialTrack._id,
         audioId:initialTrack.data.audio,
+        trackdata:initialTrack.data.trackdata,
     }
 }
 const audioReducer=(state,action)=>{
@@ -261,6 +263,7 @@ function MusicDisplay(props){
                 <audio id={"trackAudio"} src={track.audio} controls/>:
                 <audio id={"streamAudio"} src={done?audio:""} controls/>
             }
+            {/*<input type={"button"} onClick={()=>console.log(track)}/>*/}
             <MusicInfo>
                 <InfoDisplay>{track.title}</InfoDisplay>
                 <InfoDisplay>{track.artist}</InfoDisplay>

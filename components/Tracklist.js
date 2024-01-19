@@ -8,6 +8,7 @@ import Navigator from "./Navigator";
 const ListBody = styled.div`
   display: grid;
   justify-content: center;
+  padding-top: 10%;
   //overflow-y: scroll;
   //
   //
@@ -20,17 +21,20 @@ const ListBody = styled.div`
   
 `
 const ListItem = styled.label`
+  background-color: rgb(33, 111, 255,40);
   z-index: 1;
   color: white;
   font-size: large;
-  width: fit-content;
+  //width: fit-content;
   text-decoration: none;
   border: 2px solid transparent;
-  &:hover{
+  margin-bottom: 5px;
+  &:hover {
     border: 2px solid white;
   }
+
   box-sizing: border-box;
-  height: 500px;
+  //height: 500px;
 `
 const TrackThumb = styled.img`
   height: 128px;
@@ -84,14 +88,14 @@ export default function Tracklist(){
             {Object.values(tracks).map(track=>{
                 return(
                     <ListItem id={track._id} key={track._id} onClick={()=>{router.push("listen/"+track._id)}} htmlFor={"navLink"+track._id}>
-                        <TrackThumb alt={"Track Image"} src={track.data.image}/>
+                        {/*<TrackThumb alt={"Track Image"} src={track.data.image}/>*/}
                         <p>{track.data.title?track.data.title:"Title"}</p>
                         <p>{track.data.artist?track.data.artist:"Artist"};{track.data.album ? track.data.album:"Album"}</p>
                         {/*<p>{track.data.title}</p>*/}
                     </ListItem>
                 )
             })}
-        </ListBody>
+            </ListBody>
         </>
 
     )
