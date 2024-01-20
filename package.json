@@ -3,11 +3,13 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "dev-both": "concurrently \"next dev\" \"node .\\hls_server\\app.js\""
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "browser-id3-writer": "^6.0.0",
+    "concurrently": "^8.2.2",
     "express": "^4.18.2",
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
