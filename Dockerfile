@@ -25,7 +25,7 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn build
 
@@ -38,7 +38,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -47,6 +47,8 @@ COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
+RUN mkdir streamStorage
+RUN mkdir audiofiles
 RUN chown nextjs:nodejs .next
 RUN chown nextjs:nodejs streamStorage/
 RUN chown nextjs:nodejs audiofiles/
