@@ -23,7 +23,7 @@ export default async function (req, res) {
             //         res.status(201).json({ message: 'Data fetched successfully!', data:track });
             //     })
             // }
-            console.log(tracks)
+            // console.log(tracks)
             res.status(201).json(tracks)
             // return JSON.parse(JSON.stringify(tracks))
         } catch (error) {
