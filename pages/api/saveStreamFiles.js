@@ -39,12 +39,13 @@ export default async function (req,res){
                 '-f hls'
             ]).output("streamStorage/"+fileName+"/"+fileName+".m3u8").on('end',()=>{
                 console.log("finished creating stream files")
+                res.status(200)
                 fs.rm(process.env.FILESTORAGE+'tempfile.wav',(err)=>{
                     console.log(err)
                 })
             }).run();
         })
-        res.status(200)
+        // res.status(200)
     }else(
         res.status(405)
     )

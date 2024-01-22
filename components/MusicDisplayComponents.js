@@ -18,6 +18,15 @@ export const MusicBox = styled.div`
   border:solid 2px white;
   border-radius: 5px;
   box-sizing: border-box;
+  background-image: url(${(props) => props.url === undefined?"" : props.url});
+`
+export const UploadBox = styled.div`
+  margin-top: 5%;
+  width: 360px;
+  height: 360px;
+  border:solid 2px white;
+  border-radius: 5px;
+  box-sizing: border-box;
   background-image: url(${(props) => props.url === undefined?"assets/upload.png" : props.url});
 `
 export const MusicInfo = styled.div`

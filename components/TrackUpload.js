@@ -5,7 +5,7 @@ import {
     InfoInput,
     MusicBox,
     MusicInfo,
-    MusicUpload,
+    MusicUpload, UploadBox,
     UploadButton
 } from "./MusicDisplayComponents";
 import {useReducer, useState} from "react";
@@ -58,7 +58,7 @@ export default function TrackUpload(props){
     const [track, trackDispatch] = useReducer(trackReducer,{},trackInitializer)
 
     const [buffer,setBuffer]=useState()
-
+    const [loading, setLoading] = useState(false);
     const handleDrop=async (e)=>{
         e.preventDefault()
         e.stopPropagation()
@@ -158,6 +158,7 @@ export default function TrackUpload(props){
     const saveAudio=()=>{
         console.log(track)
         const formData = new FormData();
+        setLoading(true)
         // formData.append('blob', new Blob([track.audio]))
         fetch("/api/saveTrack",{
             method:"POST",
@@ -170,24 +171,22 @@ export default function TrackUpload(props){
                 return res.json()
             }
             throw new Error("Something went wrong")
-        }).then(data=>{
+        }).then(async data => {
             console.log(data)
-            trackDispatch({type:"change",tag:"audioId",value:data.data})
-            fetch("/api/saveStreamFiles?filename="+data.data,{
-                method:"GET"
-            }).then(res=>{
-                if(res.ok){
-                    return res.json()
-                }
-                throw new Error("Something went wrong")
-            }).then(data=>{
-                console.log(data)
-            }).catch(err=>{
+            trackDispatch({type: "change", tag: "audioId", value: data.data.audioId})
+            fetch("/api/saveStreamFiles?filename=" + data.data.audioId, {
+                method: "GET"
+            }).catch(err => {
+                setLoading(false)
                 console.log(err)
             })
+            // setLoading(false)
+            router.push("listen/" + data.data.objectId.insertedId)
         }).catch(err=>{
+            setLoading(false)
             console.log(err)
         })
+        console.log("ranHere")
     }
     const changeTag=(e)=>{
         trackDispatch({type:"change",tag:e.target.id,value:e.target.value})
@@ -204,11 +203,11 @@ export default function TrackUpload(props){
         <DisplayBody>
             <MusicUpload>
                 <BackButton onClick={()=>{router.push("listen/")}}> Go Back</BackButton>
-                <UploadButton disabled={track.audio === undefined} onClick={saveAudio}>Upload Music</UploadButton>
+                <UploadButton disabled={track.audio === undefined || loading} onClick={saveAudio}>Upload Music</UploadButton>
             </MusicUpload>
-            <MusicBox url={track.image} defaultUrl={"assets/upload.png"} onDrop={handleDrop} onDragOver={e=>e.preventDefault()}>
+            <UploadBox url={track.image} defaultUrl={"assets/upload.png"} onDrop={handleDrop} onDragOver={e=>e.preventDefault()}>
 
-            </MusicBox>
+            </UploadBox>
             <audio src={track.audio} controls></audio>
             <MusicInfo>
                 <InfoInput id={"title"} placeholder={"Track Title"} value={track.title||""} onChange={changeTag}/>
