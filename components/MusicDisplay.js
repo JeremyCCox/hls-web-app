@@ -72,7 +72,7 @@ const trackInitializer=(initialTrack)=>{
         track: initialTrack.data.track,
         trackId:initialTrack._id,
         audioId:initialTrack.data.audio,
-        trackdata:initialTrack.data.trackdata,
+        // trackdata:initialTrack.data.trackdata,
     }
 }
 const audioReducer=(state,action)=>{

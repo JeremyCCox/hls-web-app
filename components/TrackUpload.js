@@ -53,7 +53,7 @@ const trackInitializer=()=>{
 }
 export default function TrackUpload(props){
     const router = useRouter()
-    const audioContext = new AudioContext();
+    // const audioContext = new AudioContext();
 
     const [track, trackDispatch] = useReducer(trackReducer,{},trackInitializer)
 
@@ -142,15 +142,15 @@ export default function TrackUpload(props){
             trackDispatch({type: "change", tag:"extension",value:"lll"})
             if (mp3Tag.error !== '') throw new Error(mp3Tag.error)
             setBuffer(mp3Tag.buffer)
-            audioContext.decodeAudioData(buff).then(res=>{
-                console.log(res)
-                trackDispatch({type:"setAttrib",attrib:"trackdata",value:{
-                        duration:res.duration,
-                        length:res.length,
-                        numberOfChannels:res.numberOfChannels,
-                        sampleRate:res.sampleRate
-                    }})
-            })
+            // audioContext.decodeAudioData(buff).then(res=>{
+            //     console.log(res)
+            //     trackDispatch({type:"setAttrib",attrib:"trackdata",value:{
+            //             duration:res.duration,
+            //             length:res.length,
+            //             numberOfChannels:res.numberOfChannels,
+            //             sampleRate:res.sampleRate
+            //         }})
+            // })
 
         }
         reader.readAsArrayBuffer(file)
