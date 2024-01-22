@@ -83,7 +83,6 @@ export default function Tracklist(){
     // console.log(props)
     return(
         <>
-            <Navigator/>
             <ListBody>
             {Object.values(tracks).map(track=>{
                 return(

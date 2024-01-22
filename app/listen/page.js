@@ -1,11 +1,13 @@
 import MusicDisplay from "../../components/MusicDisplay";
 import Tracklist from "../../components/Tracklist";
 import {MongoClient} from "mongodb";
+import Navigator from "../../components/Navigator";
 
 export default async function Page() {
     // const tracks = await getTracks()
     return (
         <>
+            <Navigator/>
             <Tracklist />
         </>
     )

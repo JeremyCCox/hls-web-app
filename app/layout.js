@@ -2,6 +2,8 @@
 
 import StyledComponentsRegistry from "../lib/registry";
 import GlobalStyles from "../lib/GlobalStyles";
+import HomePage from "./home-page";
+import Navigator from "../components/Navigator";
 
 export default function RootLayout({children}){
 
@@ -9,6 +11,8 @@ export default function RootLayout({children}){
         <html>
             <body>
                 <StyledComponentsRegistry>
+                    {/*<HomePage/>*/}
+                    {/*<Navigator/>*/}
                     <GlobalStyles/>
                     {children}
                 </StyledComponentsRegistry>

@@ -12,13 +12,14 @@ const NavZone = styled.div`
   //border: white solid 1px;
   //box-sizing: border-box;
   width: 100%;
-  padding-bottom: 10%;
   //&:hover{
   //  bottom: 68%;
   //}
   transition: bottom 2s;
   display: flex;
   justify-content: space-evenly;
+  //scroll-snap-type: y proximity;
+  //scroll-snap-align: start;
 `
 const NavButton = styled.label`
   font-size: xxx-large;
@@ -31,6 +32,7 @@ const NavButton = styled.label`
   //flex-basis: 20%;
   align-content: end;
   //align-items: baseline;
+  margin :20px
 `
 
 export default function Navigator(){
