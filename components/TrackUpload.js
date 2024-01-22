@@ -48,7 +48,7 @@ const trackReducer = (state,action)=>{
 }
 const trackInitializer=()=>{
     return{
-        image:"assets/upload.png"
+        // image:
     }
 }
 export default function TrackUpload(props){
@@ -115,6 +115,22 @@ export default function TrackUpload(props){
         reader.readAsDataURL(file);
 
     }
+    const generateStreamFiles=()=>{
+        console.log(track)
+        fetch("/api/saveStreamFiles?filename="+track.audioId,{
+            method:"GET"
+        }).then(res=>{
+            if(res.ok){
+                return res.json()
+            }
+            throw new Error("Something went wrong")
+        }).then(data=>{
+            console.log(data)
+        }).catch(err=>{
+            console.log(err)
+        })
+
+    }
     const getMetaData=(file)=>{
         var reader = new FileReader();
         reader.onloadend = async function () {
@@ -150,7 +166,25 @@ export default function TrackUpload(props){
             },
             body:JSON.stringify(track)
         }).then(res=>{
-            console.log(res.data)
+            if(res.ok){
+                return res.json()
+            }
+            throw new Error("Something went wrong")
+        }).then(data=>{
+            console.log(data)
+            trackDispatch({type:"change",tag:"audioId",value:data.data})
+            fetch("/api/saveStreamFiles?filename="+data.data,{
+                method:"GET"
+            }).then(res=>{
+                if(res.ok){
+                    return res.json()
+                }
+                throw new Error("Something went wrong")
+            }).then(data=>{
+                console.log(data)
+            }).catch(err=>{
+                console.log(err)
+            })
         }).catch(err=>{
             console.log(err)
         })
@@ -170,12 +204,11 @@ export default function TrackUpload(props){
         <DisplayBody>
             <MusicUpload>
                 <BackButton onClick={()=>{router.push("listen/")}}> Go Back</BackButton>
-                <UploadButton $uploadable={track.audio !== undefined && track.image !== undefined} onClick={saveAudio}>Upload Music</UploadButton>
+                <UploadButton disabled={track.audio === undefined} onClick={saveAudio}>Upload Music</UploadButton>
             </MusicUpload>
-            <MusicBox url={track.image} onDrop={handleDrop} onDragOver={e=>e.preventDefault()}>
+            <MusicBox url={track.image} defaultUrl={"assets/upload.png"} onDrop={handleDrop} onDragOver={e=>e.preventDefault()}>
 
             </MusicBox>
-            <input type={"button"} onClick={()=>{console.log(track)}}/>
             <audio src={track.audio} controls></audio>
             <MusicInfo>
                 <InfoInput id={"title"} placeholder={"Track Title"} value={track.title||""} onChange={changeTag}/>

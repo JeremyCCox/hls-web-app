@@ -4,41 +4,46 @@ import ffmpeg from "fluent-ffmpeg";
 import ffmpegInstaller from "@ffmpeg-installer/ffmpeg"
 import http from 'http'
 
-ffmpeg.setFfmpegPath(ffmpegInstaller.path)
+// ffmpeg.setFfmpegPath(ffmpegInstaller.path)
 
 export default async function (req,res){
     if(req.method === "GET"){
-
+        console.log(req.query.filename)
         // let filePath = process.env.FILESTORAGE+req.query.filename
-        let fileName = "bb788396-05cc-4aa1-bca0-272bad7bedac"
-        let filePath = process.env.FILESTORAGE+fileName
+        // let filePath = process.env.FILESTORAGE+req.query.filename
+        // let fileName = "bb788396-05cc-4aa1-bca0-272bad7bedac.m3u8"
+        let filePath = "streamStorage/"+req.query.filename
 
-       await fs.readFile(filePath, 'utf8',(err,data)=>{
+       fs.readFile(filePath, 'utf-8',(err,data)=>{
             // console.log(data.substring(0,50));
            if(err){
                console.log(err)
+               // res.end("")
+           }else{
+               console.log("responding data")
+               console.log(data.substring(0,30))
+            res.end(data,'utf-8')
            }
-           let buffer = Buffer.from(
-               data.split('base64,')[1],
-               "base64"
-           )
-           fs.writeFileSync(process.env.FILESTORAGE+'tempfile.wav',buffer)
-                let pseudoData={
-                   duration:160.50961451247164,
-                   length:7078474,
-                   numberOfChannels:2,
-                   sampleRate:44100,
-               }
-               ffmpeg(process.env.FILESTORAGE+'tempfile.wav',{timeout:432000}).addOptions([
-                   '-hls_time '+pseudoData.duration,
-                   '-f hls'
-               ]).output("streamStorage/"+fileName+".m3u8").on('end',()=>{
-                   console.log("finished creating stream files")
-                   fs.rm(process.env.FILESTORAGE+'tempfile.wav',(err)=>{
-                       console.log(err)
-                   })
-               }).run();
-
+           // let buffer = Buffer.from(
+           //     data.split('base64,')[1],
+           //     "base64"
+           // )
+           // fs.writeFileSync(process.env.FILESTORAGE+'tempfile.wav',buffer)
+           //      let pseudoData={
+           //         duration:160.50961451247164,
+           //         length:7078474,
+           //         numberOfChannels:2,
+           //         sampleRate:44100,
+           //     }
+           //     ffmpeg(process.env.FILESTORAGE+'tempfile.wav',{timeout:432000}).addOptions([
+           //         '-hls_time '+pseudoData.duration,
+           //         '-f hls'
+           //     ]).output("streamStorage/"+fileName+".m3u8").on('end',()=>{
+           //         console.log("finished creating stream files")
+           //         fs.rm(process.env.FILESTORAGE+'tempfile.wav',(err)=>{
+           //             console.log(err)
+           //         })
+           //     }).run();
        })
 
         // let pseudoData={

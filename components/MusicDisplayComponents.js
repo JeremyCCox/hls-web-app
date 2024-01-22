@@ -17,7 +17,8 @@ export const MusicBox = styled.div`
   height: 360px;
   border:solid 2px white;
   border-radius: 5px;
-  background-image: url(${(props) => props.url});
+  box-sizing: border-box;
+  background-image: url(${(props) => props.url === undefined?"assets/upload.png" : props.url});
 `
 export const MusicInfo = styled.div`
   //background-color: rgb(0, 0, 77);
@@ -147,10 +148,14 @@ export const BackButton = styled.button`
   padding:20px 30px;
 `
 export const UploadButton = styled.button`
-  border: solid 1px ${props=> props.ready?"white":"gray"};
+  border: solid 1px white;
   border-radius: 30px;
   font-size: x-large;
   background-color: rgba(0,0,0,0);
-  color: ${props=> props.$uploadable?"white":"gray"};
+  color: white;
   padding:20px 30px;
+  &:disabled{
+    color: gray;
+    border-color: gray;
+  }
 `

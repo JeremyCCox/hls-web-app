@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  nextjs-blog:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - audiofiles:/app/audiofiles
+      - streamStorage:/app/streamStorage
+volumes:
+  audiofiles:
+  streamStorage:

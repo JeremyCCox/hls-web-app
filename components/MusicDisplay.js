@@ -1,6 +1,6 @@
 'use client'
 import styled from "styled-components";
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useReducer, useRef, useState} from "react";
 import MP3Tag from "mp3tag.js";
 import { ID3Writer } from 'browser-id3-writer';
 // import Image from "next/image"
@@ -18,6 +18,7 @@ import {
     PlayButton
 } from "./MusicDisplayComponents";
 import Navigator from "./Navigator";
+import HLSTrack from "./HLSTrack";
 
 
 
@@ -91,6 +92,7 @@ const audioInitializer = (audioId)=>{
 function MusicDisplay(props){
     const [track, trackDispatch] = useReducer(trackReducer,props.track,trackInitializer)
     const [audio, audioDispatch] = useReducer(audioReducer,props.audio,audioInitializer)
+    const audioRef = useRef(null);
     // const [audio, audioDispatch] = useReducer(trackReducer, "",undefined)
     // const [audio, setAudio] = useState()
 
@@ -220,11 +222,6 @@ function MusicDisplay(props){
         //     setBuffer(res)
         // })
     }
-    useEffect(()=>{
-        if(done){
-            document.getElementById("streamAudio").play()
-        }
-    },[done])
     const saveAudio=()=>{
         console.log(track)
         const formData = new FormData();
@@ -244,25 +241,28 @@ function MusicDisplay(props){
     const changeTag=(e)=>{
         trackDispatch({type:"change",tag:e.target.id,value:e.target.value})
     }
-    const [paused, setPaused] = useState(false)
+    const [paused, setPaused] = useState(true)
     useEffect(()=>{
         if(paused){
-            document.getElementById("streamAudio").pause()
+            audioRef.current.pause()
         }else{
-            document.getElementById("streamAudio").play()
+            audioRef.current.play()
         }
     },[paused])
+
     return(
         <>
             <Navigator/>
             <DisplayBody>
             <MusicBox url={track.image}  >
-                {audio===""?<LoadButton onClick={getTrack}/>:<PlayButton onClick={()=>{setPaused(!paused)}} paused={paused}/>}
+                <PlayButton onClick={()=>{setPaused(!paused)}} paused={paused}/>
+                {/*{audio===""?<LoadButton onClick={getTrack}/>:<PlayButton onClick={()=>{setPaused(!paused)}} paused={paused}/>}*/}
             </MusicBox>
-            {track.audio !== undefined?
-                <audio id={"trackAudio"} src={track.audio} controls/>:
-                <audio id={"streamAudio"} src={done?audio:""} controls/>
-            }
+            {/*{track.audio !== undefined?*/}
+            {/*    <audio id={"trackAudio"} src={track.audio} controls/>:*/}
+            {/*    <audio id={"streamAudio"} src={done?audio:""} controls/>*/}
+            {/*}*/}
+                <HLSTrack trackId={track.audioId} ref={audioRef} />
             {/*<input type={"button"} onClick={()=>console.log(track)}/>*/}
             <MusicInfo>
                 <InfoDisplay>{track.title}</InfoDisplay>

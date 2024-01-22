@@ -32,3 +32,4 @@ yarn-error.log*
 .idea/jsLibraryMappings.xml
 yarn.lock
 /audiofiles/
+/streamStorage/
