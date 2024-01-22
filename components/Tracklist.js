@@ -4,6 +4,7 @@ import {useEffect, useReducer, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Navigator from "./Navigator";
+import ListScroll from "./ListScroll";
 
 const ListBody = styled.div`
   display: grid;
@@ -18,29 +19,9 @@ const ListBody = styled.div`
   //&::-webkit-scrollbar{
   //  display: none;
   //}
-  
 `
-const ListItem = styled.label`
-  background-color: rgb(33, 111, 255,40);
-  z-index: 1;
-  color: white;
-  font-size: large;
-  //width: fit-content;
-  text-decoration: none;
-  border: 2px solid transparent;
-  margin-bottom: 5px;
-  &:hover {
-    border: 2px solid white;
-  }
 
-  box-sizing: border-box;
-  //height: 500px;
-`
-const TrackThumb = styled.img`
-  height: 128px;
-  width: 128px;
-  background-color: white;
-`
+
 const Filler = styled.div`
   border: solid 2px green;
   height: 200px;
@@ -67,12 +48,36 @@ export default function Tracklist(){
               }
           }).then(data=>{
               console.log(data)
-              setTracks(data||[])
+              setTracks(splitItems(data||[]))
           }).catch(err=>{
               console.log(err)
           })
       }
     },[])
+    const scrollSize = 3;
+    const splitItems = (items)=>{
+
+        if( items.length===0){
+            console.log("zero")
+            return [];
+        }
+        if( items.length < scrollSize){
+            console.log("less")
+            return [items]
+        }
+        let splitArrays = []
+        let loopSize = (items.length / scrollSize).toFixed(0)
+        console.log("Loopsize Coming", loopSize)
+        for(let i = 0; i < loopSize; i++){
+            // console.log(i)
+            if(i === loopSize-1){
+                splitArrays.push(items.slice(i*scrollSize,items.length))
+            }else{
+                splitArrays.push(items.slice(i*scrollSize,(i*scrollSize)+scrollSize))
+            }
+        }
+        return splitArrays
+    }
 
     const router = useRouter()
 
@@ -84,16 +89,9 @@ export default function Tracklist(){
     return(
         <>
             <ListBody>
-            {Object.values(tracks).map(track=>{
-                return(
-                    <ListItem id={track._id} key={track._id} onClick={()=>{router.push("listen/"+track._id)}} htmlFor={"navLink"+track._id}>
-                        {/*<TrackThumb alt={"Track Image"} src={track.data.image}/>*/}
-                        <p>{track.data.title?track.data.title:"Title"}</p>
-                        <p>{track.data.artist?track.data.artist:"Artist"};{track.data.album ? track.data.album:"Album"}</p>
-                        {/*<p>{track.data.title}</p>*/}
-                    </ListItem>
-                )
-            })}
+                {Object.values(tracks).map(trackList=>{
+                    return <ListScroll tracks={trackList}/>
+                })}
             </ListBody>
         </>
 
