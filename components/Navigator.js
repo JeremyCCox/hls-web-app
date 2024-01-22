@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import {useState} from "react";
 
 const NavZone = styled.div`
-  position: fixed;
+  //position: fixed;
   z-index: 1;
   //height: 5%;
   //bottom: 90%;
@@ -26,6 +26,7 @@ const NavButton = styled.label`
   color: white;
   border: solid white 1px;
   border-radius: 30px;
+  padding:20px;
   text-align: center;
   //flex-basis: 20%;
   align-content: end;

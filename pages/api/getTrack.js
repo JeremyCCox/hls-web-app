@@ -9,7 +9,7 @@ export default async function (req, res) {
         // const trackId = req.query.trackId;
         const client = new MongoClient(process.env.MONGODB_URI);
         try {
-            const db = client.db('musicdata');
+            const db = client.db(process.env.DATABASE);
             const trackData  = await db
                 .collection("tracks")
                 .find({_id:req.query.trackId})

@@ -22,7 +22,7 @@ export default async function (req, res) {
             //
             // data.audio = randomName
             // await client.connect()
-            // const db = client.db('musicdata');
+            // const db = client.db(process.env.DATABASE);
             // await db.collection('tracks').insertOne({data})
 
             res.status(201).json({ message: 'Data saved successfully!'});

@@ -36,7 +36,7 @@ export default async function handler (req, res) {
 
             data.audio = randomName
             await client.connect()
-            const db = client.db('musicdata');
+            const db = client.db(process.env.DATABASE);
             let queryResult = await db.collection('tracks').insertOne({data})
 
             res.status(201).json({ message: 'Data saved successfully!',data:{audioId:randomName,objectId:queryResult}});

@@ -7,7 +7,7 @@ export default async function (req, res) {
         const client = new MongoClient(process.env.MONGODB_URI);
 
         try {
-            const db = client.db('musicdata');
+            const db = client.db(process.env.DATABASE);
             const tracks  = await db
                 .collection("tracks")
                 .find({})

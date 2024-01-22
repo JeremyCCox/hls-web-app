@@ -15,7 +15,7 @@ export async function getTracks(){
     const client = new MongoClient(process.env.MONGODB_URI);
     try{
         await client.connect()
-        const db = client.db('musicdata');
+        const db = client.db(process.env.DATABASE);
         const tracks  = await db
             .collection("tracks")
             .find({})
